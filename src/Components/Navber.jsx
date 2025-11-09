@@ -1,7 +1,7 @@
 import React from 'react';
 import headericon from '../assets/cleanlinesspng.png'
 import usericon from '../assets/download.png'
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 const Navber = () => {
 
@@ -34,7 +34,7 @@ const Navber = () => {
         </nav>
       </ul>
     </div>
-    <a className="flex gap-3 justify-between items-center font-bold text-gray-700  text-2xl"><img className='w-14 h-14 border-1 border-gray-300 rounded-full' src={headericon} />CleanZone Report</a>
+    <a className="flex gap-3 justify-between items-center font-bold text-gray-700  text-[1.3rem]"><img className='w-14 h-14 border-1 border-gray-300 rounded-full' src={headericon} />CleanZone Report</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 ">
@@ -46,8 +46,8 @@ const Navber = () => {
     </ul>
   </div>
   <div className="navbar-end gap-4">
-    <a className="btn btn-outline text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Log in</a>
-    <a className="btn btn-outline text-white bg-orange-500  font-bold  hover:border-orange-400">Register</a>
+    <Link to='/auth/login' className="btn btn-outline text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Log in</Link>
+    <Link to='/auth/register' className="btn btn-outline text-white bg-orange-500  font-bold  hover:border-orange-400">Register</Link>
     <img className='w-13 h-13' src={usericon} />
   </div>
 </div>
