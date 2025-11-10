@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import headericon from '../assets/cleanlinesspng.png'
-import usericon from '../assets/download.png'
-import { Link, NavLink } from 'react-router';
+import {  Link, NavLink,  } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 
 const Navber = () => {
-  const {user} = useContext(AuthContext)
+  const {user,LogOut} = useContext(AuthContext)
+  const [open,setOpen] = useState(false)
 
     const links = <>
-        <NavLink>Home</NavLink>
+        <NavLink to='/'>Home</NavLink>
         <NavLink> All Issues</NavLink>
       
        {
@@ -18,15 +18,16 @@ const Navber = () => {
        }
       
     </>
-              
-    
+
+    const Handlelogout = () => {
+      LogOut()      
+    }
+                 
     return (
         <div >
-           
-
             <div className=' bg-[#FBF1EF]' >
 
-                <div className="navbar container mx-auto w-11/12 ">
+         <div className="navbar container mx-auto w-11/12 ">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -40,7 +41,7 @@ const Navber = () => {
         </nav>
       </ul>
     </div>
-    <a className="flex gap-3 justify-between items-center font-bold text-gray-700  text-[1.3rem]"><img className='w-14 h-14 border-1 border-gray-300 rounded-full' src={headericon} />CleanZone Report</a>
+    <a className="flex gap-3 justify-between items-center font-bold text-gray-700  text-[1.3rem]"><img className='w-14 h-14 border-2 border-orange-300 rounded-full' src={headericon} />CleanZone Report</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 ">
@@ -54,17 +55,20 @@ const Navber = () => {
   <div className="navbar-end gap-4">
 
     {
-      user ? <div>
-       <img className='w-16 h-16 rounded-full' src={user.photoURL} />
-     </div> 
-     
-     : <div>
+      user ? (<div className=' flex items-center gap-3'>
+
+        {
+          open &&  <Link to='/auth/login' onClick={Handlelogout} className=' btn btn-outline   text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200'>Log out</Link>
+        }
+         <img onClick={() => setOpen(!open)} className='w-14 h-14 border-2 cursor-pointer border-orange-300 rounded-full' src={user.photoURL} />
+       
+     </div>) 
+    
+     : (<div>
        <Link to='/auth/login' className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Log in</Link>
     <Link to='/auth/register' className="btn btn-outline text-white bg-orange-500  font-bold  hover:border-orange-400">Register</Link> 
-    </div>
+    </div>)
     }
-   
-   
   </div>
 </div>
             </div>
