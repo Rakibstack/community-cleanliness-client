@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import headericon from '../assets/cleanlinesspng.png'
 import usericon from '../assets/download.png'
 import { Link, NavLink } from 'react-router';
+import { AuthContext } from '../AuthProvider/AuthProvider';
 
 const Navber = () => {
+  const {user} = useContext(AuthContext)
 
     const links = <>
         <NavLink>Home</NavLink>
         <NavLink> All Issues</NavLink>
-        <NavLink>Add Issues</NavLink>
+      
+       {
+        user  &&   <> <NavLink>Add Issues</NavLink>
         <NavLink>My Issues</NavLink>
-        <NavLink>My Contribution</NavLink>    
+        <NavLink>My Contribution</NavLink>     </>
+       }
+      
     </>
               
     
@@ -46,9 +52,19 @@ const Navber = () => {
     </ul>
   </div>
   <div className="navbar-end gap-4">
-    <Link to='/auth/login' className="btn btn-outline text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Log in</Link>
-    <Link to='/auth/register' className="btn btn-outline text-white bg-orange-500  font-bold  hover:border-orange-400">Register</Link>
-    <img className='w-13 h-13' src={usericon} />
+
+    {
+      user ? <div>
+       <img className='w-16 h-16 rounded-full' src={user.photoURL} />
+     </div> 
+     
+     : <div>
+       <Link to='/auth/login' className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Log in</Link>
+    <Link to='/auth/register' className="btn btn-outline text-white bg-orange-500  font-bold  hover:border-orange-400">Register</Link> 
+    </div>
+    }
+   
+   
   </div>
 </div>
             </div>
