@@ -5,6 +5,7 @@ import { AuthContext } from '../AuthProvider/AuthProvider';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IoEyeSharp } from 'react-icons/io5';
+import auth from '../Firebase/firebase.config';
 
 const Register = () => {
     const Registerprovider = new GoogleAuthProvider();
@@ -39,11 +40,11 @@ const Register = () => {
         console.log(result);
         
      updateUserProfile(updateProfile)
-     .then(result => {
-        console.log(result);
+     .then(() => {
+       const currentUser = auth.currentUser; 
+      setUser(currentUser);
        
-     }).catch(error => {
-        console.log(error);
+     }).catch(() => {
         setUser(user)
      })  
         

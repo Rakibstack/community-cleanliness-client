@@ -7,6 +7,7 @@ const Navber = () => {
   const {user,LogOut} = useContext(AuthContext)
   const [open,setOpen] = useState(false)
 
+
     const links = <>
         <NavLink to='/'>Home</NavLink>
         <NavLink> All Issues</NavLink>
@@ -22,6 +23,7 @@ const Navber = () => {
     const Handlelogout = () => {
       LogOut()      
     }
+   
                  
     return (
         <div >
@@ -41,7 +43,7 @@ const Navber = () => {
         </nav>
       </ul>
     </div>
-    <a className="flex gap-3 justify-between items-center font-bold text-gray-700  text-[1.3rem]"><img className='w-14 h-14 border-2 border-orange-300 rounded-full' src={headericon} />CleanZone Report</a>
+    <a className="flex gap-3 justify-between items-center font-bold text-gray-700  text-[1.3rem]"><img className='w-13 h-13 border-2 border-orange-300 rounded-full' src={headericon} />CleanZone Report</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 ">
@@ -60,7 +62,7 @@ const Navber = () => {
         {
           open &&  <Link to='/auth/login' onClick={Handlelogout} className=' btn btn-outline   text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200'>Log out</Link>
         }
-         <img onClick={() => setOpen(!open)} className='w-14 h-14 border-2 cursor-pointer border-orange-300 rounded-full' src={user.photoURL} />
+         <img onClick={() => setOpen(!open)} className='w-13 h-13 border-2 cursor-pointer border-orange-300 rounded-full' src={user.photoURL} />
        
      </div>) 
     
