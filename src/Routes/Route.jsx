@@ -5,6 +5,7 @@ import Authentication from "../Layout/Authentication";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
 import ForgotPass from "../Components/ForgotPass";
+import AddIssues from "../Components/Add-issues";
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
                 index: true,
                 path: '/',
                 element: <Homepage></Homepage>
+            },
+            {
+                path:'/addissues',
+                element: <AddIssues></AddIssues>
             }
         ]
 

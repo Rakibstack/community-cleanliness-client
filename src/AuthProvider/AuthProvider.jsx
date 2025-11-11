@@ -12,48 +12,45 @@ const AuthProvider = ({children}) => {
    const createUser = (email,password) => {
       setLoader(true)
       return createUserWithEmailAndPassword(auth,email,password)
-      .finally(() => setLoader(false))
    }
 
    const loginUser = (email,password) => {
       setLoader(true)
       return signInWithEmailAndPassword(auth, email, password)
-      .finally(() => setLoader(false) )
    }
 
    const signUpWithGoogle = (provider) => {
    setLoader(true)
     return signInWithPopup(auth,provider)
-    .finally(() => setLoader(false))
+  
    }
 
    const updateUserProfile = (profileinfo) => {
       setLoader(true)
     return updateProfile(auth.currentUser,profileinfo)
-    .finally(() => setLoader(false))
 
+   }
+    const LogOut = () => {
+      setLoader(true)
+      return signOut(auth)
+   }
+    const resetPassword = (email) => {
+      setLoader(true)
+      return sendPasswordResetEmail(auth,email)
+   
    }
 
    useEffect(() => {
 
   const unsubscribe = onAuthStateChanged(auth,(currentuser) => {
+   
       setUser(currentuser || null)
       setLoader(false);
     })
     return () =>  unsubscribe();
 
    },[])
-
-   const resetPassword = (email) => {
-      setLoader(true)
-      return sendPasswordResetEmail(auth,email)
-      .finally(() => setLoader(false))
-   }
-
-   const LogOut = () => {
-      return signOut(auth)
-   }
-
+  
     const authinfo = {
      createUser,loginUser,LogOut,
      user,setUser,
