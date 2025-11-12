@@ -50,6 +50,7 @@ const AddIssues = () => {
   }
   return (
     <div>
+      <title>Report Issues</title>
       <div className="max-w-xl mx-auto p-6">
         <h1 className="text-4xl font-bold mb-8 text-center text-gray-700">
           Report a Public Issue
