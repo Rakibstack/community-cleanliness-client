@@ -1,17 +1,17 @@
-import { use } from "react";
+import { Link } from "react-router";
 
-const RecentIssues = ({ issuesPromise }) => {
 
-    const Recentdata = use(issuesPromise)
+const RecentIssues = ({ issues }) => {
+
 
     return (
 
         <div className="bg-[#FBF1EF]">
             <h2 className="text-center text-4xl py-5 font-bold underline">Recent Issues</h2>
-            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 container mx-auto w-11/12 py-10 ">
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2  lg:grid-cols-3  container mx-auto w-11/12 py-10 ">
 
             {
-       Recentdata.map(data => ( <div key={data._id} className="relative w-[360px] mb-38 transition-all  duration-300 ease-out hover:-translate-y-4  ">
+       issues.map(data => ( <div key={data._id} className="relative w-[360px] mb-38 transition-all  duration-300 ease-out hover:-translate-y-4  ">
       {/* Image */}
       <img
         src={data.image}
@@ -31,9 +31,9 @@ const RecentIssues = ({ issuesPromise }) => {
           <h2>{data.category}</h2>
         </div>
 
-        <button className="btn btn-outline w-full  text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">
+        <Link to={`/detailspage/${data._id}`}  className="btn btn-outline w-full  text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">
           See Details &gt;&gt;&gt;
-        </button>
+        </Link>
       </div>
     </div>
 

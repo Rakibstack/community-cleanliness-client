@@ -10,7 +10,7 @@ const Navber = () => {
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
-        <NavLink> All Issues</NavLink>
+        <NavLink to='/allissues'> All Issues</NavLink>
       
        {
         user  &&   <> <NavLink to='/addissues'>Add Issues</NavLink>

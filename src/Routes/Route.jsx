@@ -7,6 +7,8 @@ import Register from "../Components/Register";
 import ForgotPass from "../Components/ForgotPass";
 import AddIssues from "../Components/Add-issues";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Allissues from "../Components/Allissues";
+import DetailsPages from "../Components/DetailsPages";
 
 
 const router = createBrowserRouter([
@@ -24,8 +26,19 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <AddIssues></AddIssues>
                 </PrivateRoute>
-            },{
-            
+            },
+            {
+                path: '/allissues',
+                element: <PrivateRoute>
+                    <Allissues></Allissues>
+                </PrivateRoute> 
+            },
+            {
+                path: '/detailspage/:id',
+                loader: ({params}) => fetch( `http://localhost:3000/detailspage/${params.id}`),
+                element: <PrivateRoute>
+                     <DetailsPages></DetailsPages>
+                </PrivateRoute>
             }
         ]
 
