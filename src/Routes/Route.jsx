@@ -9,6 +9,7 @@ import AddIssues from "../Components/Add-issues";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Allissues from "../Components/Allissues";
 import DetailsPages from "../Components/DetailsPages";
+import Myissues from "../Components/Myissues";
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,12 @@ const router = createBrowserRouter([
                 loader: ({params}) => fetch( `http://localhost:3000/detailspage/${params.id}`),
                 element: <PrivateRoute>
                      <DetailsPages></DetailsPages>
+                </PrivateRoute>
+            },
+            {
+                path: '/myissues',
+                element: <PrivateRoute>
+                    <Myissues></Myissues>
                 </PrivateRoute>
             }
         ]

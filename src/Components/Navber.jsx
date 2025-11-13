@@ -2,11 +2,15 @@ import React, { useContext, useState } from 'react';
 import headericon from '../assets/cleanlinesspng.png'
 import {  Link, NavLink,  } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import Loader from './Loader';
 
 const Navber = () => {
   const {user,LogOut} = useContext(AuthContext)
   const [open,setOpen] = useState(false)
-
+   
+  if(!user){
+    return <Loader></Loader>
+  }
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
@@ -14,7 +18,7 @@ const Navber = () => {
       
        {
         user  &&   <> <NavLink to='/addissues'>Add Issues</NavLink>
-        <NavLink>My Issues</NavLink>
+        <NavLink to='/myissues'>My Issues</NavLink>
         <NavLink>My Contribution</NavLink>     </>
        }
       
