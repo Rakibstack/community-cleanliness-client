@@ -62,7 +62,7 @@ const Navber = () => {
         {
           open &&  <Link to='/auth/login' onClick={Handlelogout} className=' btn btn-outline   text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200'>Log out</Link>
         }
-         <img onClick={() => setOpen(!open)} className='w-13 h-13 border-2 cursor-pointer border-orange-300 rounded-full' src={user.photoURL} />
+         <img onClick={() => setOpen(!open)} className='w-13 h-13 border-2 cursor-pointer border-orange-300 rounded-full' src={user?.photoURL} />
        
      </div>) 
     

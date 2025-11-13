@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
  import { ToastContainer, toast } from 'react-toastify';
 import { GoogleAuthProvider } from 'firebase/auth';
@@ -14,6 +14,8 @@ const Register = () => {
         updateUserProfile} = useContext(AuthContext);
     const [error,setError] = useState()
     const [show, setShow] = useState(false)
+     const location = useLocation();
+    const navigate = useNavigate();
 
    const HandleRegister = (e) => {
     e.preventDefault()
@@ -22,7 +24,6 @@ const Register = () => {
     const Photo = e.target.photo.value;
     const Email = e.target.email.value;
     const Password = e.target.password.value;
-    console.log(Name,Photo,Email,Password);
     
 
     const updateProfile = {
@@ -38,6 +39,7 @@ const Register = () => {
     e.target.reset()
     createUser(Email,Password).then(result => {
         console.log(result);
+         navigate(location.state ? location.state : '/')
         
      updateUserProfile(updateProfile)
      .then(() => {
@@ -56,10 +58,9 @@ const Register = () => {
    const HandleGoogle = () => {
 
     signUpWithGoogle(Registerprovider)
-    .then(result => {
-        console.log(result);      
-    }).catch(error => {
-    console.log(error);
+    .then(() => {
+         navigate(location.state ? location.state : '/')
+    }).catch(() => {
             
     })
 

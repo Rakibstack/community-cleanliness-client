@@ -1,5 +1,5 @@
-import React, { useContext, useRef } from 'react';
-import { useLoaderData } from 'react-router';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import {  useLoaderData } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
@@ -7,10 +7,20 @@ import Swal from 'sweetalert2';
 const DetailsPages = () => {
     const detailData = useLoaderData();
      const { _id: productid} = detailData;
+     const [Contribute,setContribute] = useState([])
    
     const modalref = useRef();
     const {user} = useContext(AuthContext)
     const axiossecure = useAxiosSecure()
+
+     useEffect(() => {
+        
+        axiossecure.get(`/mycontribute/${productid}`)
+        .then(data => {
+
+         setContribute(data.data)          
+        })
+      },[productid,axiossecure])
 
     const HandleModal = () => {
      modalref.current.showModal();
@@ -18,6 +28,8 @@ const DetailsPages = () => {
     const canclebutton = () => {
       modalref.current.close()
     }
+    
+       
     const HandleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -28,13 +40,15 @@ const DetailsPages = () => {
         name:form.name.value,
         productid:productid,
         email: user?.email || "",
+        image:user?.photoURL,
         phone:form.phone.value,
         address:form.address.value,
         date: new Date()       
       }  
+
       axiossecure.post('/mycontribute',contributeinfo)
-      .then(data => {
-        if (data.data.insertedId) {
+      .then(res => {
+        if (res.data.insertedId) {
                   Swal.fire({
                     position: "center",
                     icon: "success",
@@ -42,23 +56,28 @@ const DetailsPages = () => {
                     showConfirmButton: false,
                     timer: 2500
                   });
-                }
 
-        
+                  contributeinfo._id = res.data.insertedId
+                  const newcontribute = [...Contribute, contributeinfo].sort((a,b) => b.amount - a.amount)
+                  setContribute(newcontribute);
+                }    
       })
+
+     
+
       e.target.reset()
       modalref.current.close();
        
     }
-
+    
 
 
     return (
         <div>
-
+          <title>Details Page</title>
             <div className="min-h-screen bg-gray-200 py-8 flex justify-center">
                 <div className="max-w-2xl w-full bg-[#FBF1EF] shadow-xl rounded-2xl overflow-hidden">
-                    <div className="relative h-68 w-full">
+                    <div className="relative h-72 w-full">
                         <img
                             src={detailData?.image}
                             alt={detailData?.title}
@@ -72,7 +91,6 @@ const DetailsPages = () => {
 
 
                     <div className="p-6 space-y-6">
-                        {/* Grid Info Section */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
                                 <p className="text-gray-500 text-sm">Category</p>
@@ -98,15 +116,11 @@ const DetailsPages = () => {
                             </div>
                         </div>
 
-
-                        {/* Description */}
                         <div className="bg-gray-50 p-5 shadow-md rounded-xl">
                             <h2 className="text-xl font-bold mb-2">Description</h2>
                             <p className="text-gray-700 leading-relaxed">{detailData?.description}</p>
                         </div>
 
-
-                        {/* Button */}
                         <div className="flex justify-end">
                             <button onClick={HandleModal} className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">
                                 Pay Clean-Up Contribution
@@ -175,6 +189,60 @@ const DetailsPages = () => {
 
                     </div>
                 </dialog>
+            </div>
+            <div>
+                 <div className="mt-10 bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-100 p-6">
+     <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
+  Contributors ({Contribute.length})
+</h2>
+
+      {Contribute.length === 0 ? (
+        <p className="text-center text-gray-500 italic">
+          No contributions yet.
+        </p>
+      ) : (
+        <div className="overflow-x-auto rounded-xl">
+            
+          <table className="min-w-full text-sm text-left text-gray-700">
+            <thead className="bg-[#FBF1EF] text-orange-500">
+              <tr>
+                <th scope="col" className="px-6 py-3 rounded-tl-xl">
+                  Image
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3 rounded-tr-xl text-right">
+                  Amount (৳)
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {Contribute.map((c, index) => (
+                <tr
+                  key={index}
+                  className="hover:bg-blue-50 transition-colors duration-200"
+                >
+                  <td className="px-6 py-4">
+                    <img
+                      src={c.image}
+                      alt={c.name}
+                      className="w-10 h-10 rounded-full object-cover border border-gray-300"
+                    />
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-800">
+                    {c.name}
+                  </td>
+                  <td className="px-6 py-4 text-right font-semibold text-orange-500">
+                    ৳{c.amount.toLocaleString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
             </div>
         </div>
     );
