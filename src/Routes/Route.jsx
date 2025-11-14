@@ -10,6 +10,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Allissues from "../Components/Allissues";
 import DetailsPages from "../Components/DetailsPages";
 import Myissues from "../Components/Myissues";
+import MyContribute from "../Components/MyContribute";
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,12 @@ const router = createBrowserRouter([
                 path: '/myissues',
                 element: <PrivateRoute>
                     <Myissues></Myissues>
+                </PrivateRoute>
+            },
+            {
+                path: '/mycontribute',
+                element: <PrivateRoute>
+                    <MyContribute></MyContribute>
                 </PrivateRoute>
             }
         ]

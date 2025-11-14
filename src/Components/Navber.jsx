@@ -5,12 +5,10 @@ import { AuthContext } from '../AuthProvider/AuthProvider';
 import Loader from './Loader';
 
 const Navber = () => {
-  const {user,LogOut} = useContext(AuthContext)
+  const {user,LogOut,} = useContext(AuthContext)
   const [open,setOpen] = useState(false)
    
-  if(!user){
-    return <Loader></Loader>
-  }
+
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
@@ -19,13 +17,15 @@ const Navber = () => {
        {
         user  &&   <> <NavLink to='/addissues'>Add Issues</NavLink>
         <NavLink to='/myissues'>My Issues</NavLink>
-        <NavLink>My Contribution</NavLink>     </>
+        <NavLink to='/mycontribute'>My Contribution</NavLink>     </>
        }
       
     </>
 
     const Handlelogout = () => {
-      LogOut()      
+      LogOut() 
+    
+         
     }
    
                  
