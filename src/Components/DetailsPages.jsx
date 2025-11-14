@@ -1,251 +1,249 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import {  useLoaderData } from 'react-router';
+import { useLoaderData } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 
 const DetailsPages = () => {
-    const detailData = useLoaderData();
-     const { _id: productid} = detailData;
-     const [Contribute,setContribute] = useState([])
-   
-    const modalref = useRef();
-    const {user} = useContext(AuthContext)
-    const axiossecure = useAxiosSecure()
+  const detailData = useLoaderData();
+  const { _id: productid } = detailData;
+  const [Contribute, setContribute] = useState([])
 
-     useEffect(() => {
-        
-        axiossecure.get(`/mycontribute/${productid}`)
-        .then(data => {
+  const modalref = useRef();
+  const { user } = useContext(AuthContext)
+  const axiossecure = useAxiosSecure()
 
-         setContribute(data.data)          
-        })
-      },[productid,axiossecure])
+  useEffect(() => {
 
-    const HandleModal = () => {
-     modalref.current.showModal();
+    axiossecure.get(`/mycontribute/${productid}`)
+      .then(data => {
+
+        setContribute(data.data)
+      })
+  }, [productid, axiossecure])
+
+  const HandleModal = () => {
+    modalref.current.showModal();
+  }
+  const canclebutton = () => {
+    modalref.current.close()
+  }
+
+
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const contributeinfo = {
+      title: form.title.value,
+      amount: form.amount.value,
+      name: form.name.value,
+      productid: productid,
+      email: user?.email || "",
+      image: user?.photoURL,
+      phone: form.phone.value,
+      address: form.address.value,
+      date: new Date()
     }
-    const canclebutton = () => {
-      modalref.current.close()
-    }
-    
-       
-    const HandleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.target;
 
-      const contributeinfo = {
-        title: form.title.value,
-        amount:form.amount.value,
-        name:form.name.value,
-        productid:productid,
-        email: user?.email || "",
-        image:user?.photoURL,
-        phone:form.phone.value,
-        address:form.address.value,
-        date: new Date()       
-      }  
-
-      axiossecure.post('/mycontribute',contributeinfo)
+    axiossecure.post('/mycontribute', contributeinfo)
       .then(res => {
         if (res.data.insertedId) {
-                  Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Your Contribute has been Success",
-                    showConfirmButton: false,
-                    timer: 2500
-                  });
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your Contribute has been Success",
+            showConfirmButton: false,
+            timer: 2500
+          });
 
-                  contributeinfo._id = res.data.insertedId
-                  const newcontribute = [...Contribute, contributeinfo].sort((a,b) => b.amount - a.amount)
-                  setContribute(newcontribute);
-                }    
+          contributeinfo._id = res.data.insertedId
+          const newcontribute = [...Contribute, contributeinfo].sort((a, b) => b.amount - a.amount)
+          setContribute(newcontribute);
+        }
       })
 
-     
+    e.target.reset()
+    modalref.current.close();
 
-      e.target.reset()
-      modalref.current.close();
-       
-    }
-    
+  }
 
 
-    return (
-        <div>
-          <title>Details Page</title>
-            <div className="min-h-screen bg-gray-200 py-8 flex justify-center">
-                <div className="max-w-2xl w-full bg-[#FBF1EF] shadow-xl rounded-2xl overflow-hidden">
-                    <div className="relative h-72 w-full">
+
+  return (
+    <div>
+      <title>Details Page</title>
+      <div className="min-h-screen bg-gray-200 py-8 flex justify-center">
+        <div className="max-w-2xl w-full bg-[#FBF1EF] shadow-xl rounded-2xl overflow-hidden">
+          <div className="relative h-72 w-full">
+            <img
+              src={detailData?.image}
+              alt={detailData?.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+            <h1 className="absolute bottom-4 left-4 text-3xl font-bold text-white drop-shadow-md">
+              {detailData?.title}
+            </h1>
+          </div>
+
+
+          <div className="p-6 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
+                <p className="text-gray-500 text-sm">Category</p>
+                <p className="font-semibold">{detailData?.category}</p>
+              </div>
+
+
+              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
+                <p className="text-gray-500 text-sm">Location</p>
+                <p className="font-semibold">{detailData?.location}</p>
+              </div>
+
+
+              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
+                <p className="text-gray-500 text-sm">Date</p>
+                <p className="font-semibold">{detailData?.date}</p>
+              </div>
+
+
+              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
+                <p className="text-gray-500 text-sm">Suggested Clean‑Up Budget</p>
+                <p className="font-semibold">{detailData?.amount} BDT</p>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 p-5 shadow-md rounded-xl">
+              <h2 className="text-xl font-bold mb-2">Description</h2>
+              <p className="text-gray-700 leading-relaxed">{detailData?.description}</p>
+            </div>
+
+            <div className="flex justify-end">
+              <button onClick={HandleModal} className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">
+                Pay Clean-Up Contribution
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+
+        <dialog ref={modalref} className="modal  modal-bottom sm:modal-middle">
+          <div className="modal-box bg-[#FBF1EF]">
+
+            <form onSubmit={HandleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-gray-600 mb-1">Issue Title</label>
+                <input type="text" name='title' required placeholder="Enter issue title" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+              </div>
+
+
+              <div>
+                <label className="block text-gray-600 mb-1">Amount</label>
+                <input type="number" required name='amount' placeholder="Enter contribution amount" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+              </div>
+
+
+              <div>
+                <label className="block text-gray-600 mb-1">Contributor Name</label>
+                <input type="text" required name='name' placeholder="Your full name" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+              </div>
+
+
+              <div>
+                <label className="block text-gray-600 mb-1">Email </label>
+                <input type="email" readOnly value={user?.email} className="w-full p-3 rounded-xl border border-gray-300 bg-gray-100 cursor-not-allowed" />
+              </div>
+
+
+              <div>
+                <label className="block text-gray-600 mb-1">Phone Number</label>
+                <input type="text" required name='phone' placeholder="Enter your phone number" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+              </div>
+
+
+              <div>
+                <label className="block text-gray-600 mb-1">Address</label>
+                <input type="text" required name='address' placeholder="Your address" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+              </div>
+
+
+              <div>
+                <label className="block text-gray-600 mb-1">Date</label>
+                <p className="p-3 bg-gray-100 rounded-xl border border-gray-300 text-gray-700">{new Date().toLocaleDateString()}</p>
+              </div>
+
+
+              <div className="flex justify-end gap-3 pt-2">
+
+
+                <button onClick={canclebutton} className='btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200' type="button">Cancel</button>
+
+                <button type="submit" className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Pay Now</button>
+              </div>
+            </form>
+
+          </div>
+        </dialog>
+      </div>
+      <div>
+        <div className="mt-10 bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-100 p-6">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
+            Contributors ({Contribute.length})
+          </h2>
+
+          {Contribute.length === 0 ? (
+            <p className="text-center text-gray-500 italic">
+              No contributions yet.
+            </p>
+          ) : (
+            <div className="overflow-x-auto rounded-xl">
+
+              <table className="min-w-full text-sm text-left text-gray-700">
+                <thead className="bg-[#FBF1EF] text-orange-500">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 rounded-tl-xl">
+                      Image
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Name
+                    </th>
+                    <th scope="col" className="px-6 py-3 rounded-tr-xl text-right">
+                      Amount (৳)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {Contribute.map((c, index) => (
+                    <tr
+                      key={index}
+                      className="hover:bg-blue-50 transition-colors duration-200"
+                    >
+                      <td className="px-6 py-4">
                         <img
-                            src={detailData?.image}
-                            alt={detailData?.title}
-                            className="w-full h-full object-cover"
+                          src={c.image}
+                          alt={c.name}
+                          className="w-10 h-10 rounded-full object-cover border border-gray-300"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                        <h1 className="absolute bottom-4 left-4 text-3xl font-bold text-white drop-shadow-md">
-                            {detailData?.title}
-                        </h1>
-                    </div>
-
-
-                    <div className="p-6 space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                                <p className="text-gray-500 text-sm">Category</p>
-                                <p className="font-semibold">{detailData?.category}</p>
-                            </div>
-
-
-                            <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                                <p className="text-gray-500 text-sm">Location</p>
-                                <p className="font-semibold">{detailData?.location}</p>
-                            </div>
-
-
-                            <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                                <p className="text-gray-500 text-sm">Date</p>
-                                <p className="font-semibold">{detailData?.date}</p>
-                            </div>
-
-
-                            <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                                <p className="text-gray-500 text-sm">Suggested Clean‑Up Budget</p>
-                                <p className="font-semibold">{detailData?.amount} BDT</p>
-                            </div>
-                        </div>
-
-                        <div className="bg-gray-50 p-5 shadow-md rounded-xl">
-                            <h2 className="text-xl font-bold mb-2">Description</h2>
-                            <p className="text-gray-700 leading-relaxed">{detailData?.description}</p>
-                        </div>
-
-                        <div className="flex justify-end">
-                            <button onClick={HandleModal} className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">
-                                Pay Clean-Up Contribution
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                      </td>
+                      <td className="px-6 py-4 font-medium text-gray-800">
+                        {c.name}
+                      </td>
+                      <td className="px-6 py-4 text-right font-semibold text-orange-500">
+                        ৳{c.amount.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-            <div>
-
-                <dialog ref={modalref} className="modal  modal-bottom sm:modal-middle">
-                    <div className="modal-box bg-[#FBF1EF]">
-
-                        <form onSubmit={HandleSubmit} className="space-y-4">
-                            <div>
-                                <label className="block text-gray-600 mb-1">Issue Title</label>
-                                <input type="text" name='title' required placeholder="Enter issue title" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-                            </div>
-
-
-                            <div>
-                                <label className="block text-gray-600 mb-1">Amount</label>
-                                <input type="number" required name='amount' placeholder="Enter contribution amount" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-                            </div>
-
-
-                            <div>
-                                <label className="block text-gray-600 mb-1">Contributor Name</label>
-                                <input type="text" required name='name' placeholder="Your full name" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-                            </div>
-
-
-                            <div>
-                                <label className="block text-gray-600 mb-1">Email </label>
-                                <input type="email" readOnly value={user?.email} className="w-full p-3 rounded-xl border border-gray-300 bg-gray-100 cursor-not-allowed" />
-                            </div>
-
-
-                            <div>
-                                <label className="block text-gray-600 mb-1">Phone Number</label>
-                                <input type="text" required name='phone' placeholder="Enter your phone number" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-                            </div>
-
-
-                            <div>
-                                <label className="block text-gray-600 mb-1">Address</label>
-                                <input type="text" required name='address' placeholder="Your address" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
-                            </div>
-
-
-                            <div>
-                                <label className="block text-gray-600 mb-1">Date</label>
-                                <p className="p-3 bg-gray-100 rounded-xl border border-gray-300 text-gray-700">{new Date().toLocaleDateString()}</p>
-                            </div>
-
-
-                            <div className="flex justify-end gap-3 pt-2">
-                               
-                                
-                                        <button onClick={canclebutton} className='btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200' type="button">Cancel</button>
-
-                                <button type="submit" className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Pay Now</button>
-                            </div>
-                        </form>
-
-                    </div>
-                </dialog>
-            </div>
-            <div>
-                 <div className="mt-10 bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-100 p-6">
-     <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
-  Contributors ({Contribute.length})
-</h2>
-
-      {Contribute.length === 0 ? (
-        <p className="text-center text-gray-500 italic">
-          No contributions yet.
-        </p>
-      ) : (
-        <div className="overflow-x-auto rounded-xl">
-            
-          <table className="min-w-full text-sm text-left text-gray-700">
-            <thead className="bg-[#FBF1EF] text-orange-500">
-              <tr>
-                <th scope="col" className="px-6 py-3 rounded-tl-xl">
-                  Image
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Name
-                </th>
-                <th scope="col" className="px-6 py-3 rounded-tr-xl text-right">
-                  Amount (৳)
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {Contribute.map((c, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-blue-50 transition-colors duration-200"
-                >
-                  <td className="px-6 py-4">
-                    <img
-                      src={c.image}
-                      alt={c.name}
-                      className="w-10 h-10 rounded-full object-cover border border-gray-300"
-                    />
-                  </td>
-                  <td className="px-6 py-4 font-medium text-gray-800">
-                    {c.name}
-                  </td>
-                  <td className="px-6 py-4 text-right font-semibold text-orange-500">
-                    ৳{c.amount.toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          )}
         </div>
-      )}
+      </div>
     </div>
-            </div>
-        </div>
-    );
+  );
 };
 
 export default DetailsPages;
