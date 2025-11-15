@@ -47,6 +47,7 @@ const MyContribute = () => {
     return (
         <div>
             <div className="p-6 max-w-5xl mx-auto">
+                <title>My Contribute Page</title>
                 <h1 className="text-2xl font-bold mb-6">My Cleanup Payments</h1>
 
 

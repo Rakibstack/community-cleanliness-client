@@ -6,11 +6,13 @@ import Loader from './Loader';
 import { ThemeContext } from '../ThemeProvider/ThemeProvider ';
 
 const Navber = () => {
-  const {user,LogOut,} = useContext(AuthContext)
+  const {user,LogOut,loader} = useContext(AuthContext)
   const [open,setOpen] = useState(false)
     const { theme, toggleTheme } = useContext(ThemeContext);
    
-
+  if(loader){
+    return <Loader></Loader>
+  }
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
@@ -43,7 +45,7 @@ const Navber = () => {
       </div>
       <ul
         tabIndex="-1"
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-4 w-78 p-4 shadow">
         <nav className='flex gap-2 '>
             {links}
         </nav>

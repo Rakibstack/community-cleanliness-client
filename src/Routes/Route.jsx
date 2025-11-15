@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/detailspage/:id',
-                loader: ({ params }) => fetch(`http://localhost:3000/detailspage/${params.id}`),
+                loader: ({ params }) => fetch(`https://cleanzone-report-server.vercel.app/detailspage/${params.id}`),
                 element: <PrivateRoute>
                     <DetailsPages></DetailsPages>
                 </PrivateRoute>
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
            
         ]
     },
-    
+
      {
                 path: '*',
                 element: <PageNotFound></PageNotFound>

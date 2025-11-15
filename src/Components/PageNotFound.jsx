@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 const PageNotFound = () => {
     return (
         <div>
+            <title>Pages Not Found</title>
               <div className="min-h-screen flex items-center justify-center bg-[var(--bg-color)] text-[var(--text-color)] px-4">
       <div className="text-center">
         

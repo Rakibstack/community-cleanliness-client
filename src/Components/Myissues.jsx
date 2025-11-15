@@ -99,7 +99,7 @@ const Myissues = () => {
 
   return (
     <div>
-
+      <title>My Issues Pages</title>
       <div className="min-h-screen bg-[#FBF1EF] mt-3 py-10 px-4">
         <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-6 border border-gray-100">
           <h1 className="text-3xl font-semibold text-center text-orange-500 mb-8">

@@ -36,6 +36,7 @@ const Allissues = () => {
   return (
 
     <div className="bg-[#FBF1EF] mt-3">
+      <title>Allissues Pages</title>
       <h2 className="text-center text-4xl py-5 font-bold underline">All Issues</h2>
       <div className="p-4 flex mx-auto w-11/12  justify-end">
 
