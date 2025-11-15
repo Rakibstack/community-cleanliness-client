@@ -4,7 +4,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
  * {
        font-family: "Poppins", sans-serif;
 }
@@ -14,5 +13,22 @@ text-decoration: underline;
 color: orange;
 
 }
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme="dark"] {
+  --bg-color: #0f0f0f;
+  --text-color: #0f0f0f;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: 0.4s;
+}
+
 
 

@@ -3,10 +3,12 @@ import headericon from '../assets/cleanlinesspng.png'
 import {  Link, NavLink,  } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import Loader from './Loader';
+import { ThemeContext } from '../ThemeProvider/ThemeProvider ';
 
 const Navber = () => {
   const {user,LogOut,} = useContext(AuthContext)
   const [open,setOpen] = useState(false)
+    const { theme, toggleTheme } = useContext(ThemeContext);
    
 
 
@@ -30,7 +32,7 @@ const Navber = () => {
    
                  
     return (
-        <div >
+        <div className='sticky top-0 z-5' >
             <div className=' bg-[#FBF1EF]' >
 
          <div className="navbar container mx-auto w-11/12 ">
@@ -75,6 +77,11 @@ const Navber = () => {
     <Link to='/auth/register' className="btn btn-outline text-white bg-orange-500  font-bold  hover:border-orange-400">Register</Link> 
     </div>)
     }
+    <div>
+        <button onClick={toggleTheme}>
+      {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+    </button>
+    </div>
   </div>
 </div>
             </div>

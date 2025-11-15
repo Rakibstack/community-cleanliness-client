@@ -11,10 +11,11 @@ import Allissues from "../Components/Allissues";
 import DetailsPages from "../Components/DetailsPages";
 import Myissues from "../Components/Myissues";
 import MyContribute from "../Components/MyContribute";
+import PageNotFound from "../Components/PageNotFound";
 
 
 const router = createBrowserRouter([
-    {  
+    {
         path: '/',
         element: <Homelayout></Homelayout>,
         children: [
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
                 element: <Homepage></Homepage>
             },
             {
-                path:'/addissues',
+                path: '/addissues',
                 element: <PrivateRoute>
                     <AddIssues></AddIssues>
                 </PrivateRoute>
@@ -33,13 +34,13 @@ const router = createBrowserRouter([
                 path: '/allissues',
                 element: <PrivateRoute>
                     <Allissues></Allissues>
-                </PrivateRoute> 
+                </PrivateRoute>
             },
             {
                 path: '/detailspage/:id',
-                loader: ({params}) => fetch( `http://localhost:3000/detailspage/${params.id}`),
+                loader: ({ params }) => fetch(`http://localhost:3000/detailspage/${params.id}`),
                 element: <PrivateRoute>
-                     <DetailsPages></DetailsPages>
+                    <DetailsPages></DetailsPages>
                 </PrivateRoute>
             },
             {
@@ -69,13 +70,19 @@ const router = createBrowserRouter([
                 path: '/auth/register',
                 element: <Register></Register>
             },
-            {  
+            {
                 path: '/auth/forgotpass',
-                element:<ForgotPass></ForgotPass>
+                element: <ForgotPass></ForgotPass>
 
-            }
+            },
+           
         ]
-    }
+    },
+    
+     {
+                path: '*',
+                element: <PageNotFound></PageNotFound>
+            }
 ])
 
 export default router;
