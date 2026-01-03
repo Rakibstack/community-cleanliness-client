@@ -7,6 +7,7 @@ const instance = axios.create({
 }) 
 
 const useAxiosSecure = () => {  
+   
  const {user,LogOut} = useContext(AuthContext)
 
   useEffect(() => {

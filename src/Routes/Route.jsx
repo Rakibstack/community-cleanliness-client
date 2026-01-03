@@ -12,12 +12,16 @@ import DetailsPages from "../Components/DetailsPages";
 import Myissues from "../Components/Myissues";
 import MyContribute from "../Components/MyContribute";
 import PageNotFound from "../Components/PageNotFound";
+import AboutSection from "../Components/AboutSection";
+import ServicesSection from "../Components/Service";
+import HowItWorks from "../Components/HowItWork";
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Homelayout></Homelayout>,
+    
         children: [
             {
                 index: true,
@@ -32,9 +36,20 @@ const router = createBrowserRouter([
             },
             {
                 path: '/allissues',
-                element: <PrivateRoute>
+                element:
                     <Allissues></Allissues>
-                </PrivateRoute>
+            },
+            {
+                path: '/aboutsection',
+                element: <AboutSection></AboutSection>
+            },
+            {
+                path: '/services',
+                element: <ServicesSection></ServicesSection>
+            },
+            {
+                path: '/howitworks',
+                element: <HowItWorks></HowItWorks>
             },
             {
                 path: '/detailspage/:id',
