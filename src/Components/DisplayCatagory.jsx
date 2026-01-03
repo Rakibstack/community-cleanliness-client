@@ -1,55 +1,84 @@
-import React from 'react';
+import React from "react";
+import {
+  Trash2,
+  Building2,
+  Wrench,
+  Route,
+} from "lucide-react";
 
-const DisplayCatagory = () => {
-    return (
-        <div className='py-14 bg-base-100'>
-            <div>
-                <h2 className='text-center text-4xl font-bold mb-4'>Category Section</h2>
+const categories = [
+  {
+    title: "Garbage",
+    desc:
+      "Improperly disposed waste causing environmental pollution and public health issues.",
+    icon: Trash2,
+  },
+  {
+    title: "Illegal Construction",
+    desc:
+      "Unauthorized building work violating city rules and posing safety risks.",
+    icon: Building2,
+  },
+  {
+    title: "Broken Public Property",
+    desc:
+      "Damaged public assets requiring urgent repair and maintenance.",
+    icon: Wrench,
+  },
+  {
+    title: "Road Damage",
+    desc:
+      "Potholes and cracked roads creating traffic and safety hazards.",
+    icon: Route,
+  },
+];
 
-            </div>
-            <div className='container mx-auto w-11/12 grid sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-4 gap-4 p-5'>
-
-                <div className='bg-white p-5 rounded-2xl shadow-xl hover:scale-105  duration-400 transition-all  hover:shadow-[0_0_20px_4px_rgba(251,241,239,0.4),0_0_35px_8px_rgba(249,215,226,0.35),0_0_55px_12px_rgba(248,187,208,0.3)]'>
-                    <h2 className='text-2xl font-bold text-gray-600 mb-2 '>Garbage</h2>
-                    <p className='tracking-wider text-base-700'>Improperly disposed waste causing environmental pollution.
-
-                        Accumulated trash affecting public health and cleanliness.
-
-                        Unmanaged waste leading to foul odor and hygiene issues.
-                    </p>
-
-                </div>
-                <div className='bg-white p-5 rounded-2xl shadow-2xl hover:scale-105  duration-400 transition-all  hover:shadow-[0_0_20px_4px_rgba(251,241,239,0.4),0_0_35px_8px_rgba(249,215,226,0.35),0_0_55px_12px_rgba(248,187,208,0.3)]'>
-                    <h2 className='text-2xl font-bold text-gray-600 mb-2'>Illegal Construction </h2>
-                    <p className='tracking-wider text-base-700'>Unauthorized building work violating city regulations.
-
-                        Structures built without proper approval or permits.
-
-                        Illegally extended property posing safety risks.</p>
-
-                </div>
-                <div className='bg-white p-5 rounded-2xl shadow-2xl hover:scale-105  duration-400 transition-all  hover:shadow-[0_0_20px_4px_rgba(251,241,239,0.4),0_0_35px_8px_rgba(249,215,226,0.35),0_0_55px_12px_rgba(248,187,208,0.3)]'>
-                    <h2 className='text-2xl font-bold text-gray-600 mb-2'>Broken Public Property</h2>
-                    <p className='tracking-wider text-base-700'>Damaged public assets affecting community use.
-
-                        Broken facilities requiring urgent repair.
-
-                        Vandalized or worn-out public structures.</p>
-
-                </div>
-                <div className='bg-white p-5 rounded-2xl shadow-2xl hover:scale-105  duration-400 transition-all  hover:shadow-[0_0_20px_4px_rgba(251,241,239,0.4),0_0_35px_8px_rgba(249,215,226,0.35),0_0_55px_12px_rgba(248,187,208,0.3)]'>
-                    <h2 className='text-2xl font-bold text-gray-600 mb-2'>Road Damag</h2>
-                    <p className='tracking-wider text-base-700'>Cracked or uneven roads slowing traffic movement.
-
-                        Potholes creating vehicle safety hazards.
-
-                        Damaged road surfaces due to poor maintenance.</p>
-
-                </div>
-
-            </div>
+const DisplayCategory = () => {
+  return (
+    <section className="py-20 bg-[#FBF1EF]/40">
+      <div className="container mx-auto w-11/12">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+            Issue Categories
+          </h2>
+          <p className="mt-3 text-gray-600 max-w-xl mx-auto">
+            Report common civic issues easily and help keep your community clean
+            and safe.
+          </p>
         </div>
-    );
+
+        {/* Cards */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {categories.map((cat, index) => (
+            <div
+              key={index}
+              className="group bg-white rounded-2xl p-6 shadow-md 
+              transition-all duration-300 hover:-translate-y-2 
+              hover:shadow-[0_12px_40px_rgba(249,115,22,0.15)]"
+            >
+              {/* Icon */}
+              <div
+                className="w-14 h-14 flex items-center justify-center rounded-xl
+                bg-orange-100 text-orange-500 mb-5
+                group-hover:bg-orange-500 group-hover:text-white transition"
+              >
+                <cat.icon size={28} />
+              </div>
+
+              {/* Text */}
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {cat.title}
+              </h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {cat.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
 
-export default DisplayCatagory;
+export default DisplayCategory;
