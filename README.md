@@ -1,7 +1,7 @@
 
 # CleanZone
 
-**Live Site (Client): https://clean-zone-client.web.app/
+**Live Site (Client): https://clean-zone-client.web.app/  
 
 ## Short Description
 CleanZone is a cleanliness and complaint-management web application where users can report issues, track complaints, and contribute to clean-up efforts. The platform is fully responsive, user-friendly, and designed for smooth performance.
