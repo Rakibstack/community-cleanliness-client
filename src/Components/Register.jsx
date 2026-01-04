@@ -1,109 +1,182 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../AuthProvider/AuthProvider';
- import { ToastContainer, toast } from 'react-toastify';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IoEyeSharp } from 'react-icons/io5';
 import auth from '../Firebase/firebase.config';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import Loader from './Loader';
 
 const Register = () => {
-    const Registerprovider = new GoogleAuthProvider();
-    const {createUser,signUpWithGoogle,
-        user,setUser,
-        updateUserProfile} = useContext(AuthContext);
-    const [error,setError] = useState()
-    const [show, setShow] = useState(false)
-     const location = useLocation();
-    const navigate = useNavigate();
+  const Registerprovider = new GoogleAuthProvider();
+  const { createUser,loader,setLoader, signUpWithGoogle, setUser, updateUserProfile } =
+    useContext(AuthContext);
 
-   const HandleRegister = (e) => {
-    e.preventDefault()
-    setError('')
-    const Name = e.target.name.value;
-    const Photo = e.target.photo.value;
-    const Email = e.target.email.value;
-    const Password = e.target.password.value;
-    
+  const { handleSubmit, register, formState: { errors } } = useForm();
+  const [show, setShow] = useState(false);
+  const [preview, setPreview] = useState('');
+  const [error, setError] = useState('');
 
-    const updateProfile = {
-        displayName : Name, photoURL: Photo,
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const HandleRegister = async (data) => {
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('image', data.photo[0]);
+
+  const usercreate =  await createUser(data.email, data.password)
+  console.log(usercreate);
+  
+      
+
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_API_KEY}`,
+        formData
+      );
+
+      await updateUserProfile({
+        displayName: data.name,
+        photoURL: res.data.data.url,
+      });
+    //   setLoading(false);
+      setUser(auth.currentUser);
+      navigate(location.state || '/');
+      setLoader(false);
+    } catch (err) {
+        console.log(err, 'error');
+        setLoader(false);
+      setError('Registration failed. Please try again.');
+    } finally {
+    setLoader(false);
     }
+  };
 
-   const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-
-   if(!regex.test(Password)){
-    toast.error("Password must be at least 6 characters long and include both uppercase and lowercase letters.")
-    return
-  }
-    e.target.reset()
-    createUser(Email,Password).then(result => {
-        console.log(result);
-         navigate(location.state ? location.state : '/')
-        
-     updateUserProfile(updateProfile)
-     .then(() => {
-       const currentUser = auth.currentUser; 
-      setUser(currentUser);
-       
-     }).catch(() => {
-        setUser(user)
-     })  
-        
-    }).catch(error => {
-    setError(error.code)        
-    })
-   }
-
-   const HandleGoogle = () => {
-
+  const HandleGoogle = () => {
     signUpWithGoogle(Registerprovider)
-    .then(() => {
-         navigate(location.state ? location.state : '/')
-    }).catch(() => {
-            
-    })
+      .then(() => navigate(location.state || '/'))
+      .catch(() => {});
+  };
 
-  }
+  if (loader) return <Loader />;
 
-    return (
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-base-200">
+      <div className="card bg-[#FBF1EF] w-full max-w-md shadow-2xl">
+        <div className="card-body">
 
-        <div className='mt-4'>
-              <ToastContainer />
-            <title>Register Page</title>
-            <div className="card bg-[#FBF1EF] w-full mx-auto  max-w-sm  shadow-2xl">
-                <h2 className='text-center text-2xl font-bold mt-4'>Please Register</h2>
-                <form  onSubmit={HandleRegister} className="card-body ">
-                    <fieldset className="fieldset">
-                        {/* Name field */}
-                         <label className="label">Name</label>
-                        <input type="text" className="input w-full" required name='name' placeholder="Type Your Name" />
-                        {/* Photo Url */}
-                         <label className="label">Photo URL</label>
-                        <input type="text" className="input w-full" required name='photo' placeholder="Enter Your Photo Url" />
-                        {/* email field */}
-                        <label className="label">Email</label>
-                        <input type="email" className="input w-full" required name='email' placeholder="Email" />
-                        {/* password field */}
-                       <div className='relative'>
-                         <label className="label">Password</label>
-                        <input type={show ? 'text' : "password"} name='password' required className="input w-full" placeholder="Password" />
-                         <button type='button' onClick={() => setShow(!show)} className=' absolute top-7 right-4'>{show ? <FaEyeSlash  size={21}/> : <IoEyeSharp size={21} />}</button>
-                       </div>
-                        {/* Google */}
-                        <button onClick={HandleGoogle} className="btn mt-2 bg-white text-black border-[#e5e5e5]">
-                            <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
-                            Login with Google
-                        </button>
-                        <h2 className='font-medium'>Already Have An Account Please? <Link className='text-orange-600 font-extrabold' to='/auth/login'>Log in</Link></h2>
-                        <p className='text-red-500 font-bold'>{error}</p>
-                        <button className="btn btn-outline text-orange-500  font-bold  hover:bg-[#FBF1EF] hover:border-orange-200 mt-4">Register</button>
-                    </fieldset>
-                </form>
+          <h2 className="text-3xl font-bold text-center mb-4">
+            Create Account 
+          </h2>
+
+          <form onSubmit={handleSubmit(HandleRegister)} className="space-y-4">
+
+            {/* Name */}
+            <div>
+              <label className="label">Name</label>
+              <input
+                className="input w-full"
+                placeholder="Your full name"
+                {...register('name', { required: true })}
+              />
+              {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
             </div>
 
+            {/* Photo */}
+            <div>
+              <label className="label">Profile Photo</label>
+              <input
+                type="file"
+                className="file-input w-full"
+                {...register('photo', { required: true })}
+                onChange={(e) =>
+                  setPreview(URL.createObjectURL(e.target.files[0]))
+                }
+              />
+              {preview && (
+                <img
+                  src={preview}
+                  className="w-20 h-20 rounded-full mt-3 border"
+                  alt="preview"
+                />
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="label">Email</label>
+              <input
+                type="email"
+                className="input w-full"
+                placeholder="example@email.com"
+                {...register('email', { required: true })}
+              />
+              {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
+            </div>
+
+            {/* Password */}
+            <div className="relative">
+              <label className="label">Password</label>
+              <input
+                type={show ? 'text' : 'password'}
+                className="input w-full"
+                placeholder="At least 6 characters"
+                {...register('password', {
+                  required: true,
+                  minLength: 6,
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+                })}
+              />
+              <button
+                type="button"
+                onClick={() => setShow(!show)}
+                className="absolute  right-4 top-8 text-gray-500"
+              >
+                {show ? <FaEyeSlash size={20} /> : <IoEyeSharp size={20} />}
+              </button>
+
+              <p className="text-xs text-gray-500 mt-1">
+                Must include uppercase & lowercase letters
+              </p>
+            </div>
+
+            {error && <p className="text-red-500 font-semibold">{error}</p>}
+
+            {/* Register Button */}
+            <button className="btn btn-outline w-full text-orange-500 font-bold">
+              Register
+            </button>
+
+            {/* Google */}
+            <button
+              type="button"
+              onClick={HandleGoogle}
+              className="btn bg-white border w-full flex gap-2"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                className="w-5"
+                alt="google"
+              />
+              Continue with Google
+            </button>
+
+            <p className="text-center font-medium">
+              Already have an account?{' '}
+              <Link to="/auth/login" className="text-orange-600 font-bold">
+                Login
+              </Link>
+            </p>
+
+          </form>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Register;
