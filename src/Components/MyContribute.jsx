@@ -13,7 +13,7 @@ const MyContribute = () => {
 
     useEffect(() => {
 
-        axiosSecure.get(`/mycontribute?email=${user?.email}`)
+        axiosSecure.get(`/mycontribute`)
             .then(res => {
                 setContribute(res.data)
                 setloading(false)

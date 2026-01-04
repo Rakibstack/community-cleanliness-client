@@ -15,7 +15,7 @@ const Myissues = () => {
   useEffect(() => {
 
     if (user?.email) {
-      axiossecure.get(`/myissues?email${user?.email}`)
+      axiossecure.get(`/myissues`)
         .then(res => {
           setmyissues(res.data)
         })

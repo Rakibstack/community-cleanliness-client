@@ -66,7 +66,7 @@ const Allissues = () => {
                 <h2 className="text-xl font-semibold mb-1">{issues.title}</h2>
 
                 <p className="text-gray-600 text-sm mb-2">
-                  {issues.description}
+                  {issues.description.slice(0, 68)}...
                 </p>
                 <div className="flex justify-between text-gray-600 font-medium mb-1">
                   <h2>{issues.location}</h2>

@@ -42,7 +42,6 @@ const Login = () => {
     };
 
     const HandleGoogle = async () => {
-        setLoading(true);
         setError('');
 
         try {
@@ -50,9 +49,10 @@ const Login = () => {
             navigate(location.state ? location.state : '/');
         } catch (err) {
             console.error(err);
+            setLoader(false);
             setError(err.message);
         } finally {
-            setLoading(false);
+            setLoader(false);
         }
     };
 
