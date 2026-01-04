@@ -28,9 +28,7 @@ const Navber = () => {
 
       {user && (
         <>
-          <NavLink to="/addissues" className={navLinkStyle}>Add Issue</NavLink>
-          <NavLink to="/myissues" className={navLinkStyle}>My Issues</NavLink>
-          <NavLink to="/mycontribute" className={navLinkStyle}>My Contribution</NavLink>
+         <NavLink to="dashboard" className={navLinkStyle}>Dashboard</NavLink>
         </>
       )}
     </>

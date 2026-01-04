@@ -12,6 +12,7 @@ import image2 from "../assets/banner2.jpg";
 import image3 from "../assets/banner3.jpg";
 import image4 from "../assets/banner4.jpg";
 import image5 from "../assets/banner5.jpg";
+import { Link } from "react-router";
 
 const slides = [
   {
@@ -46,7 +47,7 @@ const Banner = () => {
 
     <div className="relative">
       <Swiper
-        modules={[Autoplay, Pagination, EffectFade]}
+        modules={[Autoplay, Pagination, EffectFade,]}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         pagination={{
           clickable: true,
@@ -78,12 +79,12 @@ const Banner = () => {
                     </p>
 
                     <div className="mt-6 flex gap-4">
-                      <button className="btn bg-orange-500 text-white hover:bg-orange-600">
+                      <Link to='/addissues' className="btn bg-orange-500 text-white hover:bg-orange-600">
                         Report Issue
-                      </button>
-                      <button className="btn btn-outline text-white border-white hover:bg-white hover:text-black">
+                      </Link>
+                      <Link to='/howitworks' className="btn btn-outline text-white border-white hover:bg-white hover:text-black">
                         How It Works
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

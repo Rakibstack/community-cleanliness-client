@@ -24,7 +24,7 @@ const ServicesSection = () => {
           {/* Service 1 */}
           <div className="bg-white rounded-2xl shadow-md p-8 border border-orange-100 hover:shadow-lg transition">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              🧾 Issue Reporting System
+               Issue Reporting System
             </h3>
             <p className="text-gray-600 leading-relaxed">
               Users can easily report cleanliness issues by providing images,
@@ -36,7 +36,7 @@ const ServicesSection = () => {
           {/* Service 2 */}
           <div className="bg-white rounded-2xl shadow-md p-8 border border-orange-100 hover:shadow-lg transition">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              📊 Complaint Tracking & Management
+               Complaint Tracking & Management
             </h3>
             <p className="text-gray-600 leading-relaxed">
               Track complaint status in real-time with transparent updates,
@@ -47,7 +47,7 @@ const ServicesSection = () => {
           {/* Service 3 */}
           <div className="bg-white rounded-2xl shadow-md p-8 border border-orange-100 hover:shadow-lg transition">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              🔐 Secure User Authentication
+               Secure User Authentication
             </h3>
             <p className="text-gray-600 leading-relaxed">
               Secure login and protected routes ensure that users can safely
@@ -58,7 +58,7 @@ const ServicesSection = () => {
           {/* Service 4 */}
           <div className="bg-white rounded-2xl shadow-md p-8 border border-orange-100 hover:shadow-lg transition">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              💳 Clean-Up Contribution System
+               Clean-Up Contribution System
             </h3>
             <p className="text-gray-600 leading-relaxed">
               Users can contribute financially toward clean-up efforts,
@@ -69,7 +69,7 @@ const ServicesSection = () => {
           {/* Service 5 */}
           <div className="bg-white rounded-2xl shadow-md p-8 border border-orange-100 hover:shadow-lg transition">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              🔍 Smart Search & Filtering
+               Smart Search & Filtering
             </h3>
             <p className="text-gray-600 leading-relaxed">
               Quickly find issues using advanced filters based on category,
@@ -80,7 +80,7 @@ const ServicesSection = () => {
           {/* Service 6 */}
           <div className="bg-white rounded-2xl shadow-md p-8 border border-orange-100 hover:shadow-lg transition">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              📱 Fully Responsive Design
+               Fully Responsive Design
             </h3>
             <p className="text-gray-600 leading-relaxed">
               CleanZone works seamlessly across desktop, tablet, and mobile

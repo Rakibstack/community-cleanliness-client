@@ -34,8 +34,8 @@ const RecentIssues = ({ issues = [] }) => {
               </p>
 
               <div className="flex justify-between text-sm text-gray-500 mb-4">
-                <div className=" flex gap-2">
-                  <span><MapPin /></span>
+                <div className=" flex gap-1">
+                  <span><MapPin size={18} /></span>
                   <span> {data.location}</span>
 
                 </div>

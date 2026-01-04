@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import Loader from './Loader';
 
 const Myissues = () => {
   const { user } = useContext(AuthContext);
@@ -86,17 +87,14 @@ const Myissues = () => {
 
           i._id === updatedid ?  {...i, ...updateinfo } : i 
         );
-        setmyissues(updatedList);
-
-       
-         
+        setmyissues(updatedList);       
       
        }
     })
 
   }
 
-
+ 
   return (
     <div>
       <title>My Issues Pages</title>
