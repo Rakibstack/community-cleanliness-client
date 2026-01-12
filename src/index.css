@@ -1,33 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-
 @import "tailwindcss";
 @plugin "daisyui";
 
- * {
-       font-family: "Poppins", sans-serif;
+* {
+  font-family: "Poppins", sans-serif;
 }
 
 nav a.active {
-text-decoration: underline;
-color: orange;
-
+  text-decoration: underline;
+  color: orange;
 }
 
+/* Light Mode (default) */
 :root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
+  --bg-primary: #ffffff;
+  --bg-secondary: #FBF1EF;
+  --bg-card: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --border-color: #fed7aa;
 }
 
+/* Dark Mode */
+.dark,
 [data-theme="dark"] {
-  --bg-color: #0f0f0f;
-  --text-color: #0f0f0f;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #475569;
 }
 
 body {
-  background: var(--bg-color);
-  color: var(--text-color);
-  transition: 0.4s;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* DaisyUI theme overrides for dark mode */
+[data-theme="dark"] .btn-outline {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+[data-theme="dark"] .btn-outline:hover {
+  background-color: #f97316;
+  color: white;
+}
+
+/* Custom utility classes for theme */
+.bg-theme-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-theme-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.bg-theme-card {
+  background-color: var(--bg-card);
+}
+
+.text-theme-primary {
+  color: var(--text-primary);
+}
+
+.text-theme-secondary {
+  color: var(--text-secondary);
+}
+
+.text-theme-muted {
+  color: var(--text-muted);
+}
+
+.border-theme {
+  border-color: var(--border-color);
 }
 
 

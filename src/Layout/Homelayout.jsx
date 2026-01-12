@@ -5,7 +5,7 @@ import Footer from '../Components/Footer';
 
 const Homelayout = () => {
     return (
-        <div>
+        <div className="bg-theme-primary min-h-screen transition-colors duration-300">
             <title>CleanZone Report Home Pages</title>
             
              <Navber></Navber>

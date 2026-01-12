@@ -2,14 +2,14 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center bg-[#FBF1EF] text-base-content p-10">
+    <footer className="footer footer-center bg-theme-secondary text-base-content p-10 transition-colors duration-300">
       
       {/* Brand */}
       <div>
-        <h2 className="text-4xl font-bold text-gray-800">
+        <h2 className="text-4xl font-bold text-theme-primary">
           CleanZone Report
         </h2>
-        <p className="font-medium text-gray-600 mt-2 max-w-xl">
+        <p className="font-medium text-theme-secondary mt-2 max-w-xl">
           CleanZone Report is a simple community platform to report issues,
           support clean-up efforts, and promote a cleaner, healthier environment.
         </p>
@@ -17,13 +17,13 @@ const Footer = () => {
 
       {/* Social Links */}
       <nav>
-        <div className="grid grid-flow-col gap-6">
+        <div className="grid grid-flow-col gap-6 text-theme-primary">
           <a
             href="https://www.linkedin.com/in/rakibul-hasan-rakib-dev/"
             aria-label="Linkedin"
             className="hover:text-orange-500 transition"
           >
-           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linkedin-icon lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
 
           <a
@@ -62,9 +62,9 @@ const Footer = () => {
 
       {/* Copyright */}
       <aside>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-theme-muted">
           © {new Date().getFullYear()} CleanZone Report — Developed by{" "}
-          <span className="font-semibold text-gray-700">
+          <span className="font-semibold text-theme-primary">
             Rakibul Hasan
           </span>
         </p>

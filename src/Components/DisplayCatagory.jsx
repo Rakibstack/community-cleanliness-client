@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   Trash2,
   Building2,
   Wrench,
   Route,
 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
 
 const categories = [
   {
@@ -34,48 +35,119 @@ const categories = [
 ];
 
 const DisplayCategory = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      y: 50, 
+      opacity: 0,
+      scale: 0.9
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12
+      }
+    }
+  };
+
   return (
-    <section className="py-20 bg-[#FBF1EF]/40">
+    <section ref={sectionRef} className="py-20 bg-theme-secondary/40 transition-colors duration-300">
       <div className="container mx-auto w-11/12">
         {/* Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: -30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-theme-primary"
+            initial={{ scale: 0.9 }}
+            animate={isInView ? { scale: 1 } : { scale: 0.9 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             Issue Categories
-          </h2>
-          <p className="mt-3 text-gray-600 max-w-xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="mt-3 text-theme-secondary max-w-xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             Report common civic issues easily and help keep your community clean
             and safe.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {categories.map((cat, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group bg-white rounded-2xl p-6 shadow-md 
-              transition-all duration-300 hover:-translate-y-2 
+              variants={cardVariants}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.03,
+                transition: { duration: 0.3 }
+              }}
+              whileTap={{ scale: 0.98 }}
+              className="group bg-theme-card rounded-2xl p-6 shadow-md 
+              transition-all duration-300
               hover:shadow-[0_12px_40px_rgba(249,115,22,0.15)]"
             >
               {/* Icon */}
-              <div
+              <motion.div
                 className="w-14 h-14 flex items-center justify-center rounded-xl
                 bg-orange-100 text-orange-500 mb-5
-                group-hover:bg-orange-500 group-hover:text-white transition"
+                group-hover:bg-orange-500 group-hover:text-white transition dark:bg-orange-500/20"
+                whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                transition={{ duration: 0.5 }}
               >
                 <cat.icon size={28} />
-              </div>
+              </motion.div>
 
               {/* Text */}
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <motion.h3
+                className="text-xl font-semibold text-theme-primary mb-2"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: index * 0.1 + 0.5 }}
+              >
                 {cat.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              </motion.h3>
+              <motion.p
+                className="text-theme-secondary text-sm leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: index * 0.1 + 0.6 }}
+              >
                 {cat.desc}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

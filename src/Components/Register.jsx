@@ -8,6 +8,7 @@ import auth from '../Firebase/firebase.config';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Loader from './Loader';
+import { motion } from 'framer-motion';
 
 const Register = () => {
   const Registerprovider = new GoogleAuthProvider();
@@ -43,7 +44,6 @@ const Register = () => {
         displayName: data.name,
         photoURL: res.data.data.url,
       });
-    //   setLoading(false);
       setUser(auth.currentUser);
       navigate(location.state || '/');
       setLoader(false);
@@ -64,98 +64,154 @@ const Register = () => {
 
   if (loader) return <Loader />;
 
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4 }
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
-      <div className="card bg-[#FBF1EF] w-full max-w-md shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-theme-primary transition-colors duration-300 py-12">
+      <motion.div
+        className="card bg-theme-secondary w-full max-w-md shadow-2xl"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="card-body">
 
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <motion.h2
+            className="text-3xl font-bold text-center mb-4 text-theme-primary"
+            variants={itemVariants}
+          >
             Create Account 
-          </h2>
+          </motion.h2>
 
           <form onSubmit={handleSubmit(HandleRegister)} className="space-y-4">
 
             {/* Name */}
-            <div>
-              <label className="label">Name</label>
-              <input
-                className="input w-full"
+            <motion.div variants={itemVariants}>
+              <label className="label text-theme-primary">Name</label>
+              <motion.input
+                className="input w-full bg-theme-card text-theme-primary border-theme"
                 placeholder="Your full name"
                 {...register('name', { required: true })}
+                whileFocus={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
               />
               {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
-            </div>
+            </motion.div>
 
             {/* Photo */}
-            <div>
-              <label className="label">Profile Photo</label>
+            <motion.div variants={itemVariants}>
+              <label className="label text-theme-primary">Profile Photo</label>
               <input
                 type="file"
-                className="file-input w-full"
+                className="file-input w-full bg-theme-card text-theme-primary border-theme"
                 {...register('photo', { required: true })}
                 onChange={(e) =>
                   setPreview(URL.createObjectURL(e.target.files[0]))
                 }
               />
               {preview && (
-                <img
+                <motion.img
                   src={preview}
                   className="w-20 h-20 rounded-full mt-3 border"
                   alt="preview"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200 }}
                 />
               )}
-            </div>
+            </motion.div>
 
             {/* Email */}
-            <div>
-              <label className="label">Email</label>
-              <input
+            <motion.div variants={itemVariants}>
+              <label className="label text-theme-primary">Email</label>
+              <motion.input
                 type="email"
-                className="input w-full"
+                className="input w-full bg-theme-card text-theme-primary border-theme"
                 placeholder="example@email.com"
                 {...register('email', { required: true })}
+                whileFocus={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
               />
               {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
-            </div>
+            </motion.div>
 
             {/* Password */}
-            <div className="relative">
-              <label className="label">Password</label>
-              <input
+            <motion.div className="relative" variants={itemVariants}>
+              <label className="label text-theme-primary">Password</label>
+              <motion.input
                 type={show ? 'text' : 'password'}
-                className="input w-full"
+                className="input w-full bg-theme-card text-theme-primary border-theme"
                 placeholder="At least 6 characters"
                 {...register('password', {
                   required: true,
                   minLength: 6,
                   pattern: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
                 })}
+                whileFocus={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
               />
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setShow(!show)}
-                className="absolute  right-4 top-8 text-gray-500"
+                className="absolute right-4 top-8 text-theme-muted"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
                 {show ? <FaEyeSlash size={20} /> : <IoEyeSharp size={20} />}
-              </button>
+              </motion.button>
 
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-theme-muted mt-1">
                 Must include uppercase & lowercase letters
               </p>
-            </div>
+            </motion.div>
 
-            {error && <p className="text-red-500 font-semibold">{error}</p>}
+            {error && (
+              <motion.p
+                className="text-red-500 font-semibold"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                {error}
+              </motion.p>
+            )}
 
             {/* Register Button */}
-            <button className="btn btn-outline w-full text-orange-500 font-bold">
+            <motion.button
+              className="btn btn-outline w-full text-orange-500 font-bold"
+              variants={itemVariants}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
               Register
-            </button>
+            </motion.button>
 
             {/* Google */}
-            <button
+            <motion.button
               type="button"
               onClick={HandleGoogle}
-              className="btn bg-white border w-full flex gap-2"
+              className="btn bg-theme-card border-theme w-full flex gap-2 text-theme-primary"
+              variants={itemVariants}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.98 }}
             >
               <img
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -163,18 +219,21 @@ const Register = () => {
                 alt="google"
               />
               Continue with Google
-            </button>
+            </motion.button>
 
-            <p className="text-center font-medium">
+            <motion.p
+              className="text-center font-medium text-theme-primary"
+              variants={itemVariants}
+            >
               Already have an account?{' '}
               <Link to="/auth/login" className="text-orange-600 font-bold">
                 Login
               </Link>
-            </p>
+            </motion.p>
 
           </form>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

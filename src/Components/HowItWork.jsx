@@ -31,15 +31,15 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-[#FBF1EF] py-20">
+    <section className="bg-theme-secondary py-20 transition-colors duration-300">
       <div className="container mx-auto w-11/12">
 
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-bold text-theme-primary">
             How <span className="text-orange-500">CleanZone</span> Works
           </h2>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-theme-secondary max-w-2xl mx-auto">
             CleanZone follows a simple and transparent process to ensure
             cleanliness issues are reported, tracked, and resolved efficiently.
           </p>
@@ -54,17 +54,17 @@ const HowItWorks = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-md border border-orange-100 hover:shadow-lg transition"
+              className="bg-theme-card rounded-2xl p-8 shadow-md border border-theme hover:shadow-lg transition"
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-orange-500 font-bold text-lg">
                   Step {item.step}
                 </span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              <h3 className="text-xl font-semibold text-theme-primary mb-3">
                 {item.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-theme-secondary leading-relaxed">
                 {item.desc}
               </p>
             </motion.div>
@@ -73,7 +73,7 @@ const HowItWorks = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-20">
-          <p className="text-gray-700 text-lg mb-5">
+          <p className="text-theme-primary text-lg mb-5">
             Ready to take action and improve your community?
           </p>
           <Link to="/addissues" className="btn bg-orange-500 text-white font-semibold hover:bg-orange-600">

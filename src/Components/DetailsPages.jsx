@@ -71,10 +71,10 @@ const DetailsPages = () => {
 
 
   return (
-    <div>
+    <div className="bg-theme-primary min-h-screen transition-colors duration-300">
       <title>Details Page</title>
-      <div className="min-h-screen bg-gray-200 py-8 flex justify-center">
-        <div className="max-w-2xl w-full bg-[#FBF1EF] shadow-xl rounded-2xl overflow-hidden">
+      <div className="py-8 flex justify-center">
+        <div className="max-w-2xl w-full bg-theme-secondary shadow-xl rounded-2xl overflow-hidden transition-colors duration-300">
           <div className="relative h-72 w-full">
             <img
               src={detailData?.image}
@@ -90,37 +90,37 @@ const DetailsPages = () => {
 
           <div className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                <p className="text-gray-500 text-sm">Category</p>
-                <p className="font-semibold">{detailData?.category}</p>
+              <div className="bg-theme-card p-4 shadow-sm rounded-xl transition-colors duration-300">
+                <p className="text-theme-muted text-sm">Category</p>
+                <p className="font-semibold text-theme-primary">{detailData?.category}</p>
               </div>
 
 
-              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                <p className="text-gray-500 text-sm">Location</p>
-                <p className="font-semibold">{detailData?.location}</p>
+              <div className="bg-theme-card p-4 shadow-sm rounded-xl transition-colors duration-300">
+                <p className="text-theme-muted text-sm">Location</p>
+                <p className="font-semibold text-theme-primary">{detailData?.location}</p>
               </div>
 
 
-              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                <p className="text-gray-500 text-sm">Date</p>
-                <p className="font-semibold">{detailData?.date}</p>
+              <div className="bg-theme-card p-4 shadow-sm rounded-xl transition-colors duration-300">
+                <p className="text-theme-muted text-sm">Date</p>
+                <p className="font-semibold text-theme-primary">{detailData?.date}</p>
               </div>
 
 
-              <div className="bg-gray-50 p-4 shadow-sm rounded-xl">
-                <p className="text-gray-500 text-sm">Suggested Clean‑Up Budget</p>
-                <p className="font-semibold">{detailData?.amount} BDT</p>
+              <div className="bg-theme-card p-4 shadow-sm rounded-xl transition-colors duration-300">
+                <p className="text-theme-muted text-sm">Suggested Clean‑Up Budget</p>
+                <p className="font-semibold text-theme-primary">{detailData?.amount} BDT</p>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-5 shadow-md rounded-xl">
-              <h2 className="text-xl font-bold mb-2">Description</h2>
-              <p className="text-gray-700 leading-relaxed">{detailData?.description}</p>
+            <div className="bg-theme-card p-5 shadow-md rounded-xl transition-colors duration-300">
+              <h2 className="text-xl font-bold mb-2 text-theme-primary">Description</h2>
+              <p className="text-theme-secondary leading-relaxed">{detailData?.description}</p>
             </div>
 
             <div className="flex justify-end">
-              <button onClick={HandleModal} className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">
+              <button onClick={HandleModal} className="btn btn-outline mr-4 text-orange-500 font-bold hover:bg-theme-secondary hover:border-orange-200">
                 Pay Clean-Up Contribution
               </button>
             </div>
@@ -130,79 +130,80 @@ const DetailsPages = () => {
 
       <div>
 
-        <dialog ref={modalref} className="modal  modal-bottom sm:modal-middle">
-          <div className="modal-box bg-[#FBF1EF]">
+        <dialog ref={modalref} className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box bg-theme-secondary">
 
             <form onSubmit={HandleSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-600 mb-1">Issue Title</label>
-                <input type="text" name='title' required placeholder="Enter issue title" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+                <label className="block text-theme-secondary mb-1">Issue Title</label>
+                <input type="text" name='title' required placeholder="Enter issue title" className="w-full p-3 rounded-xl border border-theme bg-theme-card text-theme-primary focus:ring-2 focus:ring-orange-500 outline-none transition" />
               </div>
 
 
               <div>
-                <label className="block text-gray-600 mb-1">Amount</label>
-                <input type="number" required name='amount' placeholder="Enter contribution amount" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+                <label className="block text-theme-secondary mb-1">Amount</label>
+                <input type="number" required name='amount' placeholder="Enter contribution amount" className="w-full p-3 rounded-xl border border-theme bg-theme-card text-theme-primary focus:ring-2 focus:ring-orange-500 outline-none transition" />
               </div>
 
 
               <div>
-                <label className="block text-gray-600 mb-1">Contributor Name</label>
-                <input type="text" required name='name' placeholder="Your full name" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+                <label className="block text-theme-secondary mb-1">Contributor Name</label>
+                <input type="text" required name='name' placeholder="Your full name" className="w-full p-3 rounded-xl border border-theme bg-theme-card text-theme-primary focus:ring-2 focus:ring-orange-500 outline-none transition" />
               </div>
 
 
               <div>
-                <label className="block text-gray-600 mb-1">Email </label>
-                <input type="email" readOnly value={user?.email} className="w-full p-3 rounded-xl border border-gray-300 bg-gray-100 cursor-not-allowed" />
+                <label className="block text-theme-secondary mb-1">Email </label>
+                <input type="email" readOnly value={user?.email} className="w-full p-3 rounded-xl border border-theme bg-theme-card text-theme-muted cursor-not-allowed" />
               </div>
 
 
               <div>
-                <label className="block text-gray-600 mb-1">Phone Number</label>
-                <input type="text" required name='phone' placeholder="Enter your phone number" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+                <label className="block text-theme-secondary mb-1">Phone Number</label>
+                <input type="text" required name='phone' placeholder="Enter your phone number" className="w-full p-3 rounded-xl border border-theme bg-theme-card text-theme-primary focus:ring-2 focus:ring-orange-500 outline-none transition" />
               </div>
 
 
               <div>
-                <label className="block text-gray-600 mb-1">Address</label>
-                <input type="text" required name='address' placeholder="Your address" className="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition" />
+                <label className="block text-theme-secondary mb-1">Address</label>
+                <input type="text" required name='address' placeholder="Your address" className="w-full p-3 rounded-xl border border-theme bg-theme-card text-theme-primary focus:ring-2 focus:ring-orange-500 outline-none transition" />
               </div>
 
 
               <div>
-                <label className="block text-gray-600 mb-1">Date</label>
-                <p className="p-3 bg-gray-100 rounded-xl border border-gray-300 text-gray-700">{new Date().toLocaleDateString()}</p>
+                <label className="block text-theme-secondary mb-1">Date</label>
+                <p className="p-3 bg-theme-card rounded-xl border border-theme text-theme-primary">{new Date().toLocaleDateString()}</p>
               </div>
 
 
               <div className="flex justify-end gap-3 pt-2">
 
 
-                <button onClick={canclebutton} className='btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200' type="button">Cancel</button>
+                <button onClick={canclebutton} className='btn btn-outline mr-4 text-orange-500 font-bold hover:bg-theme-secondary hover:border-orange-200' type="button">Cancel</button>
 
-                <button type="submit" className="btn btn-outline mr-4 text-orange-500  font-bold hover:bg-[#FBF1EF] hover:border-orange-200">Pay Now</button>
+                <button type="submit" className="btn btn-outline mr-4 text-orange-500 font-bold hover:bg-theme-secondary hover:border-orange-200">Pay Now</button>
               </div>
             </form>
 
           </div>
         </dialog>
       </div>
-      <div>
-        <div className="mt-10 bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-100 p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">
+      <div className="container mx-auto w-11/12 pb-10">
+
+        <div className="mt-10 bg-theme-card backdrop-blur-xl rounded-2xl shadow-lg border border-theme p-6 transition-colors duration-300">
+          <h2 className="text-2xl font-semibold text-theme-primary mb-2 text-center">
             Contributors ({Contribute.length})
           </h2>
 
           {Contribute.length === 0 ? (
-            <p className="text-center text-gray-500 italic">
+            <p className="text-center text-theme-muted italic">
               No contributions yet.
             </p>
           ) : (
             <div className="overflow-x-auto rounded-xl">
 
-              <table className="min-w-full text-sm text-left text-gray-700">
-                <thead className="bg-[#FBF1EF] text-orange-500">
+              <table className="min-w-full text-sm text-left text-theme-primary">
+                <thead className="bg-theme-secondary text-orange-500">
                   <tr>
                     <th scope="col" className="px-6 py-3 rounded-tl-xl">
                       Image
@@ -215,20 +216,20 @@ const DetailsPages = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {Contribute.map((c, index) => (
                     <tr
                       key={index}
-                      className="hover:bg-blue-50 transition-colors duration-200"
+                      className="hover:bg-orange-50 dark:hover:bg-slate-700 transition-colors duration-200"
                     >
                       <td className="px-6 py-4">
                         <img
                           src={c.image}
                           alt={c.name}
-                          className="w-10 h-10 rounded-full object-cover border border-gray-300"
+                          className="w-10 h-10 rounded-full object-cover border border-theme"
                         />
                       </td>
-                      <td className="px-6 py-4 font-medium text-gray-800">
+                      <td className="px-6 py-4 font-medium text-theme-primary">
                         {c.name}
                       </td>
                       <td className="px-6 py-4 text-right font-semibold text-orange-500">

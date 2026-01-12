@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 
 const Authentication = () => {
     return (
-        <div>
+        <div className="bg-theme-primary min-h-screen transition-colors duration-300">
             <Navber></Navber>
             <Outlet>
                 

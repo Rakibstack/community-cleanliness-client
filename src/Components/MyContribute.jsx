@@ -48,12 +48,12 @@ const MyContribute = () => {
         <div>
             <div className="p-6 max-w-5xl mx-auto">
                 <title>My Contribute Page</title>
-                <h1 className="text-2xl font-bold mb-6">My Cleanup Payments</h1>
+                <h1 className="text-2xl font-bold mb-6 text-theme-primary">My Cleanup Payments</h1>
 
 
-                <div className="bg-white shadow rounded-xl overflow-hidden">
+                <div className="bg-theme-card shadow rounded-xl overflow-hidden transition-colors duration-300">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-gray-100 text-gray-700">
+                        <thead className="bg-theme-secondary text-theme-primary">
                             <tr>
                                 <th className="p-4">Issue Title</th>
                                 <th className="p-4">Paid Amount</th>
@@ -66,20 +66,20 @@ const MyContribute = () => {
                         <tbody>
                             {contribute.length === 0 && (
                                 <tr>
-                                    <td colSpan="5" className="p-6 text-center text-gray-500">No payment records found.</td>
+                                    <td colSpan="5" className="p-6 text-center text-theme-muted">No payment records found.</td>
                                 </tr>
                             )}
 
 
                             {contribute.map((item) => (
-                                <tr key={item._id} className="border-t hover:bg-gray-50 transition">
-                                    <td className="p-4">{item.title}</td>
-                                    <td className="p-4 font-semibold">${item.amount}</td>
-                                    <td className="p-4">{new Date(item.date).toLocaleDateString()}</td>
+                                <tr key={item._id} className="border-t border-theme hover:bg-orange-50 dark:hover:bg-slate-700 transition">
+                                    <td className="p-4 text-theme-primary">{item.title}</td>
+                                    <td className="p-4 font-semibold text-theme-primary">${item.amount}</td>
+                                    <td className="p-4 text-theme-secondary">{new Date(item.date).toLocaleDateString()}</td>
                                     <td className="p-4 text-center">
                                         <button
                                             onClick={() => downloadReport(item._id)}
-                                            className="px-3 py-2 rounded-lg border hover:bg-gray-100"
+                                            className="px-3 py-2 rounded-lg border border-theme text-theme-primary hover:bg-theme-secondary transition"
                                         >
                                             Download
                                         </button>
